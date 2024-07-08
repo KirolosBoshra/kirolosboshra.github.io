@@ -44,7 +44,7 @@ const tmp = [
 export default function Home() {
   return (
     <main className="relative flex flex-col w-full h-full justify-center">
-      <NavBar />
+      <div className="sticky top-0"><NavBar /></div>
       <div className="flex-grow py-8">
         <div className="flex flex-row justify-evenly items-start">
           <LeftSide />
