@@ -2,28 +2,13 @@ import { Marked, Renderer } from '@ts-stack/markdown';
 import fs from "fs";
 import { join } from "path";
 import hljs from 'highlight.js';
-import katex from "katex";
-import 'highlight.js/styles/github.css';
+import markdownit from 'markdown-it'
+import MarkdownItContainer from 'markdown-it-container';
 
 const postsDirectory = join(process.cwd(), "_posts");
 
-class customRenderer extends Renderer {
-  override heading(text: string, level: number, raw: string) {
-    const regexp = /\s*{([^}]+)}$/;
-    const execArr = regexp.exec(text);
-    let id: string;
 
-    if (execArr) {
-      text = text.replace(regexp, '');
-      id = `id="${execArr[1]}"`;
-    } else {
-      id = '';
-    }
-
-    return `<h${level} ${id}>${text}</h${level}>`;
-  }
-}
-
+//TODO add Katex support
 export function getPostById(id: string) {
 
   const fullPath = join(postsDirectory, `${id}.md`);
@@ -31,47 +16,46 @@ export function getPostById(id: string) {
   if (!fs.existsSync(fullPath)) {
     return null;
   }
-
   const content = fs.readFileSync(fullPath, "utf8");
 
-  Marked.setBlockRule(/^@@@ *(\w+)\n([\s\S]+?)\n@@@/, function(execArr) {
+  const md = new markdownit({
+    html: true,
+    linkify: true,
+    typographer: true,
+    highlight: function(str, lang): string {
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return '<pre><code class="hljs">' +
+            hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+            '</code></pre>';
+        } catch (__) { }
+      }
 
-    if (!execArr) {
-      return '';
+      return '<pre><code class="hljs">' + md.utils.escapeHtml(str) + '</code></pre>';
     }
+  });
+  md.use(MarkdownItContainer, 'spoiler', {
 
-    const channel = execArr[1];
-    const content = execArr[2];
+    validate: function(params: string) {
+      return !!params.trim().match(/^spoiler\s+(.*)$/);
+    },
 
-    switch (channel) {
-      case 'youtube': {
-        const id = content;
-        return `\n<iframe width="420" height="315" src="https://www.youtube.com/embed/${id}"></iframe>\n`;
-      }
-      case 'katex': {
-        return `${katex.renderToString(content)}`;
-      }
-      default: {
-        const msg = `[Error: a channel "${channel}" for an embedded code is not recognized]`;
-        return '<div style="color: red">' + msg + '</div>';
+    render: function(tokens: any[], idx: number) {
+      var m = tokens[idx].info.trim().match(/^spoiler\s+(.*)$/);
+      console.log(tokens[idx]);
+      console.log(tokens[idx].info);
+      if (tokens[idx].nesting === 1) {
+        // opening tag
+        console.log(md.utils.escapeHtml(m[1]));
+        return '<details><summary>' + md.utils.escapeHtml(m[1]) + '</summary>\n';
+
+      } else {
+        // closing tag
+        return '</details>\n';
       }
     }
   });
+  const result = md.render(content);
 
-  //NOTE this is not a Error lsp is just not working
-  Marked.setOptions({
-    renderer: new customRenderer,
-    gfm: true,
-    tables: true,
-    breaks: true,
-    pedantic: false,
-    sanitize: false,
-    smartLists: true,
-    smartypants: true,
-    highlight: (code: string, lang: string) => hljs.highlight(code, { language: lang }).value
-  });
-
-  const htmlContent = Marked.parse(content).toString();
-
-  return htmlContent;
+  return result;
 }
