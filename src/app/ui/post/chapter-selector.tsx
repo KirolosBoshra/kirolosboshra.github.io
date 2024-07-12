@@ -1,3 +1,4 @@
+'use client'
 import { FaBookmark, FaArrowUp } from "react-icons/fa";
 import { MdMenu } from "react-icons/md";
 
@@ -36,24 +37,24 @@ const RadialProgressBar = ({ radius, progress }: { radius: number, progress: num
 
 export function ChapterSelector() {
   return (
-    <div className="sticky flex w-2/5 h-16 rounded-full bg-black 
+    <div className="sticky flex w-2/5 max-sm:w-full h-16 rounded-full bg-black 
         bg-opacity-80 backdrop-blur-sm border border-zinc-400 justify-between items-center p-4">
 
       <div className="flex space-x-6 items-center">
         <span className="cursor-pointer"><MdMenu size={24} /></span>
         <div className="flex items-center pl-6 space-x-2 border-l border-zinc-400">
           <FaBookmark size={34} />
-          <p className="text-sm text-zinc-400">Chapter 1</p>
+          <p className="text-sm text-zinc-400 max-sm:text-xs">Chapter 1</p>
         </div>
       </div>
 
-      <div className="">
-        <span className="text-lg font-bold">Lorem ipsum dolor sit amet</span>
+      <div className="flex justify-center items-center">
+        <span className="text-lg font-bold max-sm:hidden">Lorem ipsum dolor sit amet</span>
       </div>
 
       <div className="flex space-x-2 justify-center items-center">
         <div className="flex flex-col items-center">
-          <span>100%</span>
+          <span className="max-sm:text-sm">100%</span>
           <span className="text-sm text-zinc-400">1/4</span>
         </div>
         <div className="border-r border-zinc-400 pr-4">
@@ -61,7 +62,12 @@ export function ChapterSelector() {
         </div>
         <div className="flex justify-center items-center text-zinc-300 
           rounded-full h-8 px-2 cursor-pointer hover:bg-zinc-950">
-          <FaArrowUp />
+          <FaArrowUp onClick={() => {
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+          }} />
         </div>
 
       </div>
