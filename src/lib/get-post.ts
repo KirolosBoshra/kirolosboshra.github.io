@@ -1,21 +1,21 @@
 import fs from "fs";
 import { join } from "path";
 import hljs from 'highlight.js';
-import markdownit from 'markdown-it'
-import { headingWithId } from "./md-plugins"
+import markdownit from 'markdown-it';
+import matter from "gray-matter";
+import { headingWithId } from "./md-plugins";
+import { Post } from "./types";
 
-const postsDirectory = join(process.cwd(), "_posts");
+export const postsDirectory = join(process.cwd(), "_posts");
+
 
 //TODO add Katex support
 export function getPostById(id: string) {
+  const realId = id.replace(/\.md$/, "");
+  const fullPath = join(postsDirectory, `${realId}.md`);
 
-  const fullPath = join(postsDirectory, `${id}.md`);
-
-  if (!fs.existsSync(fullPath)) {
-    return null;
-  }
-  const content = fs.readFileSync(fullPath, "utf8");
-
+  const file = fs.readFileSync(fullPath, "utf8");
+  const { data, content } = matter(file);
   const md = new markdownit({
     html: true,
     linkify: true,
@@ -37,5 +37,26 @@ export function getPostById(id: string) {
 
   const result = md.render(content);
 
-  return result;
+  return { ...data, id, content: result } as Post;
 }
+
+export function getPostIds() {
+  return fs.readdirSync(postsDirectory);
+}
+
+export function getAllPosts(): Post[] {
+  const ids = getPostIds();
+  if (ids.length < 2) {
+    return [getPostById(ids[0])];
+  }
+  const posts = ids
+    .map((id) => getPostById(id))
+    .sort((post1, post2) => {
+      if (post1 && post2) {
+        return (post1.date > post2.date ? -1 : 1)
+      }
+      return 1;
+    });
+  return posts;
+}
+
