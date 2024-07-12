@@ -37,7 +37,7 @@ export function getPostById(id: string) {
 
   const result = md.render(content);
 
-  return { ...data, id, content: result } as Post;
+  return { ...data, id: realId, content: result } as Post;
 }
 
 export function getPostIds() {

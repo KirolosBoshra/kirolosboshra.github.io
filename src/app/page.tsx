@@ -8,7 +8,7 @@ export default function Home() {
   const posts = getAllPosts();
   return (
     <main className="relative flex flex-col w-full h-full justify-center">
-      <div className="sticky top-0"><NavBar /></div>
+      <div className="sticky top-0"><NavBar title="Home" /></div>
       <div className="flex-grow py-8">
         <div className="flex flex-row justify-evenly items-start">
           <LeftSide />
@@ -16,8 +16,8 @@ export default function Home() {
             {posts.map((post, index) => (
               <PostCard title={post.title}
                 key={index}
-                date={new Date(post.date).toLocaleDateString()}
-                link={"post/" + post.id.replace(/\.md$/, "")}
+                date={new Date(post.date).toLocaleDateString().replaceAll('/', '-')}
+                link={"post/" + post.id}
                 description={post.description} />
             ))}
           </div>
