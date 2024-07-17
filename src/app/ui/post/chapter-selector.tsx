@@ -12,7 +12,7 @@ const RadialProgressBar = ({ radius, progress }: { radius: number, progress: num
     <div className={`relative ${width} ${height}`}>
       <svg className="w-full h-full" viewBox="0 0 100 100">
         <circle
-          className="text-zinc-900 stroke-current"
+          className="text-gray-400 dark:text-zinc-900 stroke-current"
           strokeWidth="10"
           cx="50"
           cy="50"
@@ -21,7 +21,7 @@ const RadialProgressBar = ({ radius, progress }: { radius: number, progress: num
         />
 
         <circle
-          className="text-zinc-200 progress-ring__circle stroke-current"
+          className="text-black dark:text-zinc-200 progress-ring__circle stroke-current"
           strokeWidth="10"
           strokeLinecap="round"
           cx="50"
@@ -37,14 +37,14 @@ const RadialProgressBar = ({ radius, progress }: { radius: number, progress: num
 
 export function ChapterSelector() {
   return (
-    <div className="sticky flex w-2/5 max-sm:w-full h-16 rounded-full bg-black 
-        bg-opacity-80 backdrop-blur-sm border border-zinc-400 justify-between items-center p-4">
+    <div className="sticky flex w-2/5 max-sm:w-full h-16 rounded-full bg-gray-100 dark:bg-black 
+        bg-opacity-80 backdrop-blur-sm border dark:border-zinc-400 justify-between items-center p-4">
 
       <div className="flex space-x-6 items-center">
         <span className="cursor-pointer"><MdMenu size={24} /></span>
         <div className="flex items-center pl-6 space-x-2 border-l border-zinc-400">
           <FaBookmark size={34} />
-          <p className="text-sm text-zinc-400 max-sm:text-xs">Chapter 1</p>
+          <p className="text-sm dark:text-zinc-400 max-sm:text-xs">Chapter 1</p>
         </div>
       </div>
 
@@ -60,8 +60,8 @@ export function ChapterSelector() {
         <div className="border-r border-zinc-400 pr-4">
           <RadialProgressBar radius={40} progress={55} />
         </div>
-        <div className="flex justify-center items-center text-zinc-300 
-          rounded-full h-8 px-2 cursor-pointer hover:bg-zinc-950">
+        <div className="flex justify-center items-center dark:text-zinc-300 
+          rounded-full h-8 px-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-zinc-950">
           <FaArrowUp onClick={() => {
             window.scrollTo({
               top: 0,
