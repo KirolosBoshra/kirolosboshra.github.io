@@ -7,7 +7,7 @@ import { getAllPosts } from "@/lib/get-post";
 export default function Home() {
   const posts = getAllPosts();
   return (
-    <main className="relative flex flex-col w-full h-full justify-center ">
+    <main className="relative flex flex-col w-full max-w-full h-full justify-center ">
       <div className="sticky top-0"><NavBar title="Home" /></div>
       <div className="flex-grow py-8">
         <div className="flex flex-row justify-evenly items-start">

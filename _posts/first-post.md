@@ -4,10 +4,10 @@ date: 2024-07-10
 description: Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
 ---
 
-## Welcome to StackEdit! {welcome-id}
+# Welcome to StackEdit! {welcome}
 Hi! I'm your first Markdown file in **StackEdit**. If you want to learn about StackEdit, you can read me. If you want to play with Markdown, you can edit me. Once you have finished with me, you can create new files by opening the **file explorer** on the left corner of the navigation bar.
 
-## Files
+## Files {files}
 
 StackEdit stores your files in your browser, which means all your files are automatically saved locally and are accessible **offline!**
 
@@ -32,7 +32,7 @@ You can delete the current file by clicking the **Remove** button in the file ex
 You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
 
 
-# Synchronization
+# Synchronization {synchronization}
 
 Synchronization is one of the biggest features of StackEdit. It enables you to synchronize any file in your workspace with other files stored in your **Google Drive**, your **Dropbox** and your **GitHub** accounts. This allows you to keep writing on other devices, collaborate with people you share the file with, integrate easily into your workflow... The synchronization mechanism takes place every minute in the background, downloading, merging, and uploading file modifications.
 
@@ -65,7 +65,7 @@ If you just have modified your file and you want to force syncing, click the **S
 Since one file can be synced with multiple locations, you can list and manage synchronized locations by clicking **File synchronization** in the **Synchronize** sub-menu. This allows you to list and remove synchronized locations that are linked to your file.
 
 
-# Publication
+# Publication {publication}
 
 Publishing in StackEdit makes it simple for you to publish online your files. Once you're happy with a file, you can publish it to different hosting platforms like **Blogger**, **Dropbox**, **Gist**, **GitHub**, **Google Drive**, **WordPress** and **Zendesk**. With [Handlebars templates](http://handlebarsjs.com/), you have full control over what you export.
 
@@ -89,7 +89,7 @@ After publishing, StackEdit keeps your file linked to that publication which mak
 Since one file can be published to multiple locations, you can list and manage publish locations by clicking **File publication** in the **Publish** sub-menu. This allows you to list and remove publication locations that are linked to your file.
 
 
-# Markdown extensions
+# Markdown extensions {markdown}
 
 StackEdit extends the standard Markdown syntax by adding extra **Markdown extensions**, providing you with some nice features.
 
@@ -148,7 +148,7 @@ const code = 12;
 console.log(code);
 ```
 
-## Rust {rust-code}
+# Rust {rust-code}
 
 ```rust
 fn main() {

@@ -1,6 +1,9 @@
 'use client'
-import { FaBookmark, FaArrowUp } from "react-icons/fa";
+
+import { getScrollPercentage } from "@/lib/scrollPercentage";
+import { FaArrowUp } from "react-icons/fa";
 import { MdMenu } from "react-icons/md";
+import { useEffect, useState } from "react";
 
 const RadialProgressBar = ({ radius, progress }: { radius: number, progress: number }) => {
   const width = `w-10`
@@ -36,29 +39,60 @@ const RadialProgressBar = ({ radius, progress }: { radius: number, progress: num
 }
 
 export function ChapterSelector() {
+  const [scrollPercent, setScrollPercent] = useState<number>(0);
+  const [isMenuOpen, setMenuOpen] = useState<Boolean>(false);
+  const [headers, setHeaders] = useState<Element[]>([]);
+
+  useEffect(() => {
+    setHeaders(Array.from(document.querySelectorAll('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]')));
+
+    const handleScroll = () => {
+      setScrollPercent(getScrollPercentage());
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+
+  }, []);
+
   return (
-    <div className="sticky flex w-2/5 max-sm:w-full h-16 rounded-full bg-gray-100 dark:bg-black 
+    <div className="sticky flex w-60 max-sm:w-3/5  h-16 space-x-2 rounded-full bg-gray-100 dark:bg-black 
         bg-opacity-80 backdrop-blur-sm border dark:border-zinc-400 justify-between items-center p-4">
 
-      <div className="flex space-x-6 items-center">
-        <span className="cursor-pointer"><MdMenu size={24} /></span>
-        <div className="flex items-center pl-6 space-x-2 border-l border-zinc-400">
-          <FaBookmark size={34} />
-          <p className="text-sm dark:text-zinc-400 max-sm:text-xs">Chapter 1</p>
-        </div>
+      <div className="flex items-center pr-2 border-r border-zinc-400">
+        <span className="cursor-pointer"><MdMenu size={24} onClick={() => {
+          setMenuOpen(!isMenuOpen);
+        }} /></span>
+        {isMenuOpen && (
+          <div className="absolute top-14 w-58 bg-zinc-100 dark:bg-black border border-zinc-400 
+              shadow-lg rounded-lg p-2">
+            <ul className="space-y-2">
+              {
+                headers.map((header, index) => (
+                  <li key={index} className="cursor-pointer hover:bg-gray-200 dark:hover:bg-zinc-800 p-2 rounded"
+                    onClick={() => {
+                      scrollToElementById(header.id);
+                      setMenuOpen(false)
+                    }}>
+                    {header.textContent}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        )}
       </div>
 
-      <div className="flex justify-center items-center">
-        <span className="text-lg font-bold max-sm:hidden">Lorem ipsum dolor sit amet</span>
-      </div>
+      {/*<div className="absolute flex left-0 right-8 justify-center items-center">
+        <span className="text-lg font-bold max-sm:hidden">{title}</span>
+      </div>*/}
 
-      <div className="flex space-x-2 justify-center items-center">
-        <div className="flex flex-col items-center">
-          <span className="max-sm:text-sm">100%</span>
-          <span className="text-sm text-zinc-400">1/4</span>
-        </div>
+      <div className="flex space-x-2 shrink justify-center items-center">
+        <span className="max-sm:text-sm">{scrollPercent.toFixed()}%</span>
         <div className="border-r border-zinc-400 pr-4">
-          <RadialProgressBar radius={40} progress={55} />
+          <RadialProgressBar radius={40} progress={scrollPercent} />
         </div>
         <div className="flex justify-center items-center dark:text-zinc-300 
           rounded-full h-8 px-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-zinc-950">
@@ -74,3 +108,12 @@ export function ChapterSelector() {
     </div>
   );
 }
+
+const scrollToElementById = (id: string) => {
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({
+      behavior: 'smooth', block: 'start'
+    });
+  }
+};

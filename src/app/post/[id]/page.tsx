@@ -24,10 +24,10 @@ export default function Post({ params }: Params) {
 
   const post = getPostById(params.id);
   return (
-    <main className="relative flex flex-col w-full h-full justify-center space-y-6">
+    <main className="scroll-smooth relative flex flex-col w-full h-full justify-center space-y-6">
       <NavBar title={post.title} />
-      <PostTitle title="Lorem ipsum dolor sit amet, qui minim labore adipisicing" />
-      <div className="sticky top-4 flex justify-center items-center">
+      <PostTitle title={post.title} />
+      <div className="sticky top-4 max-sm:top-6 flex justify-center items-center">
         <ChapterSelector />
       </div>
       <PostBody content={post.content} />

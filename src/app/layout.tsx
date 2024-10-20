@@ -20,7 +20,7 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, target-densitydpi=device-dpi"></meta>
       </head>
-      <body className={`bg-white text-black dark:bg-black dark:text-zinc-100 ${inter.className}`}>
+      <body className={`scroll-smooth bg-white text-black dark:bg-black dark:text-zinc-100 ${inter.className}`}>
         <Providers>
           {children}
         </Providers>

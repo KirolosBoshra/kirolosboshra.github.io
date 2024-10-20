@@ -7,7 +7,6 @@ import { useTheme } from "next-themes";
 import clsx from 'clsx';
 import Image from "next/image";
 
-//TODO
 export function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
   const { setTheme, resolvedTheme } = useTheme();
