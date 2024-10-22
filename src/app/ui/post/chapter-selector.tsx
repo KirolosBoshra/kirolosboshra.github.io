@@ -61,7 +61,7 @@ export function ChapterSelector() {
     <div className="sticky flex w-60 max-sm:w-3/5  h-16 space-x-2 rounded-full bg-gray-100 dark:bg-black 
         bg-opacity-80 backdrop-blur-sm border dark:border-zinc-400 justify-between items-center p-4">
 
-      <div className="flex items-center pr-2 border-r border-zinc-400">
+      <div className="flex h-10 items-center pr-2 border-r border-zinc-400">
         <span className="cursor-pointer"><MdMenu size={24} onClick={() => {
           setMenuOpen(!isMenuOpen);
         }} /></span>
@@ -91,7 +91,7 @@ export function ChapterSelector() {
 
       <div className="flex space-x-2 shrink justify-center items-center">
         <span className="max-sm:text-sm">{scrollPercent.toFixed()}%</span>
-        <div className="border-r border-zinc-400 pr-4">
+        <div className="border-r border-zinc-400 px-4">
           <RadialProgressBar radius={40} progress={scrollPercent} />
         </div>
         <div className="flex justify-center items-center dark:text-zinc-300 
