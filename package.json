@@ -21,7 +21,7 @@
     "katex": "^0.16.11",
     "markdown-it": "^14.1.0",
     "markdown-it-container": "^4.0.0",
-    "next": "14.2.4",
+    "next": "^14.2.16",
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
