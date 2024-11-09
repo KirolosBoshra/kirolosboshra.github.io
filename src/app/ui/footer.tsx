@@ -28,7 +28,7 @@ export function Footer() {
       <span className="text-lg">Contact Me:</span>
       <div
         className="flex items-center gap-5 px-4 py-3 font-medium border-r border-zinc-400">
-        <a href="https://github.com/kingkiro99"><FaGithub size={28} /></a>
+        <a href="https://github.com/KirolosBoshra"><FaGithub size={28} /></a>
 
         <div className="flex space-x-2 group cursor-pointer" onClick={handleClick}>
           <MdAlternateEmail size={28} />
@@ -45,7 +45,7 @@ export function Footer() {
           </div>
         </div>
 
-        <a href="https://github.com/kingkiro99"><FaLinkedin size={28} /></a>
+        <a href="https://github.com/KirolosBoshra"><FaLinkedin size={28} /></a>
       </div >
     </div >
   );
